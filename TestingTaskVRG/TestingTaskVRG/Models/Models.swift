@@ -50,7 +50,7 @@ struct Result: Codable {
     let source: Source?
     let publishedDate, updated, section, subsection: String?
     let nytdsection, adxKeywords: String?
-    let column: JSONNull?
+//    let column: JSONNull?
     let byline: String?
     let type: ResultType?
     let title, abstract: String?
@@ -60,18 +60,18 @@ struct Result: Codable {
 
     enum CodingKeys: String, CodingKey {
         case uri, url, id
-        case assetID
-        case source
-        case publishedDate
-        case updated, section, subsection, nytdsection
-        case adxKeywords
-        case column, byline, type, title, abstract
-        case desFacet
-        case orgFacet
-        case perFacet
-        case geoFacet
-        case media
-        case etaID
+               case assetID = "asset_id"
+               case source
+               case publishedDate = "published_date"
+               case updated, section, subsection, nytdsection
+               case adxKeywords = "adx_keywords"
+               case byline, type, title, abstract
+               case desFacet = "des_facet"
+               case orgFacet = "org_facet"
+               case perFacet = "per_facet"
+               case geoFacet = "geo_facet"
+               case media
+               case etaID = "eta_id"
     }
 }
 
@@ -86,8 +86,8 @@ struct Media: Codable {
 
     enum CodingKeys: String, CodingKey {
         case type, subtype, caption, copyright
-        case approvedForSyndication
-        case mediaMetadata
+        case approvedForSyndication = "approved_for_syndication"
+        case mediaMetadata = "media-metadata"
     }
 }
 
@@ -123,29 +123,29 @@ enum ResultType: String, Codable {
 
 // MARK: - Encode/decode helpers
 
-class JSONNull: Codable, Hashable {
-
-    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
-        return true
-    }
-
-    // documantation
-    
-    public var hashValue: Int {
-        return 0
-    }
-
-    public init() {}
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if !container.decodeNil() {
-            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
-        }
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encodeNil()
-    }
-}
+//class JSONNull: Codable, Hashable {
+//
+//    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
+//        return true
+//    }
+//
+//    // documantation
+//
+//    public var hashValue: Int {
+//        return 0
+//    }
+//
+//    public init() {}
+//
+//    public required init(from decoder: Decoder) throws {
+//        let container = try decoder.singleValueContainer()
+//        if !container.decodeNil() {
+//            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
+//        }
+//    }
+//
+//    public func encode(to encoder: Encoder) throws {
+//        var container = encoder.singleValueContainer()
+//        try container.encodeNil()
+//    }
+//}

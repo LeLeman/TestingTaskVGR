@@ -8,6 +8,25 @@
 import Foundation
 import Alamofire
 
+extension Data {
+
+    var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
+
+        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
+
+              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
+
+              let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else { return nil }
+
+
+
+
+        return prettyPrintedString
+
+    }
+
+}
+
 class APIManager {
 static let apiManager = APIManager()
     
@@ -21,7 +40,6 @@ static let apiManager = APIManager()
             do {
                 let jsonResult: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
                 completion(jsonResult.results)
-               print (jsonResult.results)
             } catch {
                 print (error)
             }
@@ -29,4 +47,6 @@ static let apiManager = APIManager()
         
     }
 }
+
+
 
