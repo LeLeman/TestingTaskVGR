@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import Alamofire
 import CoreData
+import SafariServices
 
 
 
@@ -36,6 +37,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var favoritesButton: UIButton!
     @IBOutlet weak var forMoreInfo: UILabel!
     
+
     
     // MARK: - Lifecycle
     
@@ -43,13 +45,15 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         articleText.text = article?.abstract ?? articleFromCoreData?.articlesAbstract
         articleTitle.text = article?.title ?? articleFromCoreData?.articlesTitle
-        
         forMoreInfo.text = "More info: " + (article?.url ?? articleFromCoreData?.articlesLink ?? " ")
+        articleText.isEditable = false
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         imageLoad()
+        buttonDissappear()
     }
     
     // MARK: - Actions
@@ -84,6 +88,12 @@ class DetailViewController: UIViewController {
         }
     }
     
+    
+    func buttonDissappear() {
+        if articleFromCoreData != nil {
+            favoritesButton.isHidden = true
+        }
+    }
     
     func imageLoad() {
         if let absoluteUrlString = article?.media?.filter({$0.type == .image }).first?.mediaMetadata?.filter({ $0.format == .mediumThreeByTwo440 }).first?.url {

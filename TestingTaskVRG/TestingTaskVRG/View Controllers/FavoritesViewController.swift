@@ -29,11 +29,14 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchDataFromCoreData()
+        
         createTable()
-        tableView.reloadData()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        fetchDataFromCoreData()
+    }
+   
     
     // MARK: - UITableViewDataDelegate
     
@@ -41,6 +44,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
     }
     
      func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
